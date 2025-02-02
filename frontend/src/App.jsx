@@ -17,9 +17,6 @@ const App = () => {
   const { authUser, checkAuth, isCheckingAuth, onlineUsers } = useAuthStore();
   const { theme } = useThemeStore();
 
-  console.log(import.meta.env.MODE);
-
-
   React.useEffect(() => {
     checkAuth();
   }, [checkAuth]);
