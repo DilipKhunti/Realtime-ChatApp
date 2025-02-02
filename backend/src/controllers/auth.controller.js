@@ -16,7 +16,10 @@ export const signup = async (req, res) => {
     const isPasswordCorrect = await validatePassword(password, res);
 
     if (!isPasswordCorrect) {
-      return;
+       return res.status(400).json({
+         message:
+           "Password must contain : \nupper case \nlower case \nnumber  \nspecial character \nat least 8 characters",
+       });
     }
 
     const user = await User.findOne({ email });
