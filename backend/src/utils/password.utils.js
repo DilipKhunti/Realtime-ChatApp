@@ -7,17 +7,16 @@ export const validatePassword = async (password, res) => {
 
   if (password.length < minLength) {
     if (res) {
-      res
+      return res
         .status(400)
         .json({ message: `Password must be at least ${minLength} characters` });
-      added;
     }
     return false;
   }
 
   if (!hasUpperCase || !hasLowerCase || !hasNumbers || !hasNonAlphas) {
     if (res) {
-      res.status(400).json({
+      return res.status(400).json({
         message:
           "Password must contain upper case, lower case, number and special character",
       });
