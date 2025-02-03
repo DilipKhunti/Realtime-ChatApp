@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
 
+//mongoode model to store messages
 const messageSchema = new mongoose.Schema(
   {
     senderId: {

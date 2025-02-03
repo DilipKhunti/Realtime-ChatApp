@@ -1,3 +1,4 @@
+//function to validate password
 export const validatePassword = async (password, res) => {
   const minLength = 8;
   const hasUpperCase = /[A-Z]/.test(password);

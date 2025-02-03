@@ -1,6 +1,7 @@
 import cloudinary from "../lib/claudinary.lib.js";
 import User from "../models/user.model.js";
 
+//functionality to change profile pic
 export const updateProfile = async (req, res) => {
   try {
     const { profilePic } = req.body;
@@ -10,6 +11,7 @@ export const updateProfile = async (req, res) => {
       return res.status(400).json({ message: "Profile pic is required" });
     }
 
+    //upload new pic on claudinary and update changes in userProfile
     const uploadResponse = await cloudinary.uploader.upload(profilePic);
     const updatedUser = await User.findByIdAndUpdate(
       userId,

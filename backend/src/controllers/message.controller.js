@@ -3,7 +3,7 @@ import Message from "../models/message.model.js";
 import cloudinary from "../lib/claudinary.lib.js";
 import { getReceiverSocketId, io } from "../lib/socket.io.lib.js";
 
-
+//get all the users except itself
 export const getUsersForSidebar = async (req, res) => {
   try {
     const loggedInUserId = req.user._id;
@@ -19,6 +19,7 @@ export const getUsersForSidebar = async (req, res) => {
   }
 };
 
+// get all the messages with particular user
 export const getMessages = async (req, res) => {
   try {
     const { id: userToChatId } = req.params;
@@ -38,6 +39,7 @@ export const getMessages = async (req, res) => {
   }
 };
 
+//functionality to send message
 export const sendMessage = async (req, res) => {
   try {
     const { text, image } = req.body;
@@ -47,6 +49,7 @@ export const sendMessage = async (req, res) => {
 
     let imageUrl;
 
+    //save image on claudinary
     if (image) {
       const uploadResponse = await cloudinary.uploader.upload(image);
       imageUrl = uploadResponse.secure_url;
@@ -61,6 +64,7 @@ export const sendMessage = async (req, res) => {
 
     await newMessage.save();
 
+    //send message to receiver in realtime using socket emit
     const receiverSocketId = getReceiverSocketId(receiverId);
     if (receiverSocketId) {
       io.to(receiverSocketId).emit("newMessage", newMessage);

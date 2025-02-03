@@ -29,6 +29,7 @@ app.use("/api/auth", authRoutes);
 app.use("/api/user", userRoutes);
 app.use("/api/message", messageRoutes);
 
+//in production forword all req to frontend except api reqs
 if (process.env.NODE_ENV === "production") {
   app.use(express.static(path.join(__dirname, "../frontend/dist")));
 
@@ -37,6 +38,7 @@ if (process.env.NODE_ENV === "production") {
   });
 }
 
+//listen on socket
 server.listen(PORT, () => {
   console.log("server is running on PORT:" + PORT);
   connectDB();

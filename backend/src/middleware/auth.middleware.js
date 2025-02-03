@@ -2,8 +2,10 @@ import jwt from "jsonwebtoken";
 
 import User from "../models/user.model.js";
 
+//functionality to check if user is logged in
 export const protectRoute = async (req, res, next) => {
   try {
+    //if user logged in, it has jwt in cookies
     const token = req.cookies.jwt;
 
     if (!token) {
@@ -12,6 +14,7 @@ export const protectRoute = async (req, res, next) => {
         .json({ message: "Unauthorized - No token provided" });
     }
 
+    //extract user id from jwt token and place user info in req
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
     if (!decoded) {

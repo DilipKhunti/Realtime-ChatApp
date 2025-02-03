@@ -5,6 +5,7 @@ import User from "../models/user.model.js";
 import { generateToken } from "../utils/jwt.utils.js";
 import { validatePassword } from "../utils/password.utils.js";
 
+//signup functionality
 export const signup = async (req, res) => {
   const { email, fullName, password } = req.body;
 
@@ -28,6 +29,7 @@ export const signup = async (req, res) => {
       return res.status(400).json({ message: "Email already exists" });
     }
 
+    //hash password
     const salt = await bcrypt.genSaltSync(10);
     const hashPassword = await bcrypt.hashSync(password, salt);
 
@@ -37,6 +39,7 @@ export const signup = async (req, res) => {
       password: hashPassword,
     });
 
+    //create new user and send in response, also sest cookies for authentication
     if (newUser) {
       generateToken(newUser._id, res);
       await newUser.save();
@@ -56,6 +59,7 @@ export const signup = async (req, res) => {
   }
 };
 
+//login functionality
 export const login = async (req, res) => {
   const { email, password } = req.body;
 
@@ -66,6 +70,7 @@ export const login = async (req, res) => {
       return res.status(400).json({ message: "Invalid Credentials" });
     }
 
+    //compare password with hash in db
     const isPasswordCorrect = await bcrypt.compare(password, user.password);
 
     if (!isPasswordCorrect) {
@@ -86,8 +91,10 @@ export const login = async (req, res) => {
   }
 };
 
+//logout functionality
 export const logout = (req, res) => {
   try {
+    //reset authentication cookies 
     res.cookie("jwt", "", { maxAge: 0 });
     res.status(200).json({ message: "Logout Successful" });
   } catch (error) {
@@ -96,6 +103,7 @@ export const logout = (req, res) => {
   }
 };
 
+//functionality to check authentication
 export const checkAuth = async (req, res) => {
   try {
     res.status(200).json(req.user);
