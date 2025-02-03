@@ -1,5 +1,6 @@
 import { MessageSquare } from "lucide-react";
 
+//default chat container if no chat is selected
 const NoChatSelected = () => {
   return (
     <div className="w-full flex flex-1 flex-col items-center justify-center p-16 bg-base-100/50">

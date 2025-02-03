@@ -3,12 +3,14 @@ import { useChatStore } from "../store/useChatStore";
 import { Image, Send, X } from "lucide-react";
 import toast from "react-hot-toast";
 
+//input to send message
 const MessageInput = () => {
   const [text, setText] = useState("");
   const [imagePreview, setImagePreview] = useState(null);
   const fileInputRef = useRef(null);
   const { sendMessage, isSendingMessage } = useChatStore();
 
+  //function to handle the upload of image
   const handleImageChange = (e) => {
     const file = e.target.files[0];
     if (!file.type.startsWith("image/")) {
@@ -16,6 +18,7 @@ const MessageInput = () => {
       return;
     }
 
+    //preview image
     const reader = new FileReader();
     reader.onloadend = () => {
       setImagePreview(reader.result);
@@ -23,11 +26,13 @@ const MessageInput = () => {
     reader.readAsDataURL(file);
   };
 
+  //funtion to remove image, after sent or removed by user
   const removeImage = () => {
     setImagePreview(null);
     if (fileInputRef.current) fileInputRef.current.value = "";
   };
 
+  //function to handle send button press
   const handleSendMessage = async (e) => {
     e.preventDefault();
     if (!text.trim() && !imagePreview) return;

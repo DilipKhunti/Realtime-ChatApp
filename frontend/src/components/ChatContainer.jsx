@@ -7,6 +7,7 @@ import MessageSkeleton from "./skeletons/MessageSkeleton";
 import { useAuthStore } from "../store/useAuthStore";
 import { formatMessageTime } from "../lib/utils";
 
+//conatiner to display chat messages
 const ChatContainer = () => {
   const {
     messages,
@@ -19,6 +20,7 @@ const ChatContainer = () => {
   const { authUser } = useAuthStore();
   const messageEndRef = useRef(null);
 
+  //load user messages on opening its chat and unload it on closing chat
   useEffect(() => {
     getMessages(selectedUser._id);
 
@@ -32,12 +34,14 @@ const ChatContainer = () => {
     unsubscribeFromMessages,
   ]);
 
+  //scroll to bottom on load
   useEffect(() => {
     if (messageEndRef.current && messages) {
       messageEndRef.current.scrollIntoView({ behavior: "smooth" });
     }
   }, [messages]);
 
+  //display skeleton if messages loading
   if (isMessagesLoading) {
     return (
       <div className="flex-1 flex flex-col overflow-auto">

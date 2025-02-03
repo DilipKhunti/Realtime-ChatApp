@@ -1,3 +1,4 @@
+//available themes
 export const THEMES = [
   "light",
   "dark",

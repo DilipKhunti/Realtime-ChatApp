@@ -1,5 +1,6 @@
 import axios from "axios";
 
+//axios connection to backend
 export const axiosInstance = axios.create({
   baseURL:
     import.meta.env.MODE === "development"

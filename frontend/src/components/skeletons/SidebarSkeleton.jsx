@@ -1,3 +1,4 @@
+//skeleton to display while users are loading
 import { Users } from "lucide-react";
 
 const SidebarSkeleton = () => {

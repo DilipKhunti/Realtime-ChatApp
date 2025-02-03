@@ -14,13 +14,15 @@ import SettingsPage from "./pages/SettingsPage";
 import ProfilePage from "./pages/ProfilePage";
 
 const App = () => {
-  const { authUser, checkAuth, isCheckingAuth, onlineUsers } = useAuthStore();
+  const { authUser, checkAuth, isCheckingAuth } = useAuthStore();
   const { theme } = useThemeStore();
 
+  //check auth on load
   React.useEffect(() => {
     checkAuth();
   }, [checkAuth]);
 
+  //return loader if auth is getting checked
   if (isCheckingAuth && !authUser)
     return (
       <div className="flex items-center justify-center h-screen">
@@ -29,6 +31,7 @@ const App = () => {
     );
 
   return (
+    // set theme from useThemeStore
     <div data-theme={theme}>
       <Navbar />
       <Routes>
@@ -51,6 +54,7 @@ const App = () => {
         />
       </Routes>
 
+      {/* toster to show notifications */}
       <Toaster />
     </div>
   );
